@@ -11,8 +11,11 @@ namespace AlaskaAirlines
 
             routes.MapRoute(
                 name: "Default",
-                url: "{controller}/{action}/{From}/{To}",
-                defaults: new { controller = "Home", action = "Index", From = UrlParameter.Optional, To = UrlParameter.Optional }
+                url: "{controller}/{action}/{From}/{To}/{SortBy}",
+                defaults: new { controller = "Home", action = "Index",
+                    From = UrlParameter.Optional,
+                    To = UrlParameter.Optional, 
+                    SortBy = UrlParameter.Optional }
             );
         }
     }
