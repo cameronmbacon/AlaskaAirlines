@@ -6,35 +6,37 @@
 @using AlaskaAirlines.ViewModels
 @model FlightViewModel
 
-<h2>Search For Flights!</h2>
+<h2 class="text-center">Search For Flights!</h2>
 
 <form asp-controller="Home" asp-action="Index" method="get">
-    <div>
-        <select name="From" asp-items="Model.Airports">
-			From:
+    <div class="form-group">
+		<label for="from">From: </label>
+        <select class="form-control" id="from" name="From" asp-items="Model.Airports">
 			@foreach (var a in Model.Airports)
 			{
                 <option value="@a.Code">@a.Name</option>
 			}
         </select>
 
-		<select name="To" asp-items="Model.Airports">
-            To:
+		<label for="to">To: </label>
+		<select class="form-control" id="to" name="To" asp-items="Model.Airports">
             @foreach (var a in Model.Airports)
             {
                 <option value="@a.Code">@a.Name</option>
             }
         </select>
-
-        <input type="submit" value="Search" />
-    </div>
+		<br />
+        <div class="center-block text-center">
+            <button class="btn btn-primary btn-lg" type="submit">Search</button>
+        </div>
+	</div>
 </form>
 
 @if (Model.Flights != null)
 {
-    <h2>Flights</h2>
+    <h2 class="text-center">Flights</h2>
 
-    <table>
+    <table class="table table-bordered">
         <thead>
             <th>From</th>
             <th>To</th>
@@ -73,8 +75,8 @@
                     <td>@f.FlightNumber</td>
                     <td>@f.Departs</td>
                     <td>@f.Arrives</td>
-                    <td>@f.MainCabinPrice</td>
-                    <td>@f.FirstClassPrice</td>
+                    <td>$ @f.MainCabinPrice</td>
+                    <td>$ @f.FirstClassPrice</td>
                 </tr>
             }
         </tbody>
