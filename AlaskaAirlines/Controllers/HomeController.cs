@@ -1,9 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 using System.Web.Mvc.Ajax;
+using AlaskaAirlines.Models;
+using CsvHelper;
 
 namespace AlaskaAirlines.Controllers
 {
@@ -11,13 +14,10 @@ namespace AlaskaAirlines.Controllers
     {
         public ActionResult Index()
         {
-            var mvcName = typeof(Controller).Assembly.GetName();
-            var isMono = Type.GetType("Mono.Runtime") != null;
+            var csv = new CsvReader(new StreamReader("./Data/airports.csv"));
+            var airports = csv.GetRecords<Airport>();
 
-            ViewData["Version"] = mvcName.Version.Major + "." + mvcName.Version.Minor;
-            ViewData["Runtime"] = isMono ? "Mono" : ".NET";
-
-            return View();
+            return View(airports.ToList());
         }
     }
 }
