@@ -3,24 +3,24 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-@using AlaskaAirlines.Models
-@model List<Airport>
+@using AlaskaAirlines.ViewModels
+@model FlightViewModel
 
 <h2>Search For Flights!</h2>
 
 <form asp-controller="Home" asp-action="Index" method="get">
     <div>
-        <select name="From" asp-items="Model">
+        <select name="From" asp-items="Model.Airports">
 			From:
-			@foreach (var a in Model)
+			@foreach (var a in Model.Airports)
 			{
                 <option value="@a.Code">@a.Name</option>
 			}
         </select>
 
-		<select name="To" asp-items="Model">
+		<select name="To" asp-items="Model.Airports">
             To:
-            @foreach (var a in Model)
+            @foreach (var a in Model.Airports)
             {
                 <option value="@a.Code">@a.Name</option>
             }
@@ -29,3 +29,58 @@
         <input type="submit" value="Search" />
     </div>
 </form>
+
+@if (Model.Flights != null)
+{
+    <h2>Flights</h2>
+
+    <table>
+        <thead>
+            <th>From</th>
+            <th>To</th>
+            <th>Flight #</th>
+            <th>
+                @Html.ActionLink("Departs", "Index",
+                new {To = Request.QueryString["To"],
+                From = Request.QueryString["From"],
+                SortBy = "Departs"})
+            </th>
+            <th>
+                @Html.ActionLink("Arrives", "Index",
+                new {To = Request.QueryString["To"],
+                From = Request.QueryString["From"],
+                SortBy = "Arrives"})
+            </th>
+            <th>
+                @Html.ActionLink("Main Cabin", "Index",
+			    new {To = Request.QueryString["To"],
+			    From = Request.QueryString["From"],
+			    SortBy = "MainCabin"})
+		    </th>
+            <th>
+                @Html.ActionLink("First Class", "Index",
+			    new {To = Request.QueryString["To"],
+			    From = Request.QueryString["From"],
+			    SortBy = "FirstClass"})
+            </th>
+        </thead>
+        <tbody>
+            @foreach (var f in Model.Flights)
+            {
+                <tr>
+                    <td>@f.From</td>
+                    <td>@f.To</td>
+                    <td>@f.FlightNumber</td>
+                    <td>@f.Departs</td>
+                    <td>@f.Arrives</td>
+                    <td>@f.MainCabinPrice</td>
+                    <td>@f.FirstClassPrice</td>
+                </tr>
+            }
+        </tbody>
+    </table>
+}
+else
+{
+    <p>Select a From and To destination to shop available flights!</p>
+}
