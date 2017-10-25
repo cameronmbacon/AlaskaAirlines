@@ -51,7 +51,7 @@ namespace AlaskaAirlines.Controllers
                         FilteredFlights.Sort((x, y) => x.MainCabinPrice.CompareTo(y.MainCabinPrice));
                         break;
                     case "FirstClass":
-                        FilteredFlights.Sort((x, y) => x.MainCabinPrice.CompareTo(y.MainCabinPrice));
+                        FilteredFlights.Sort((x, y) => x.FirstClassPrice.CompareTo(y.FirstClassPrice));
                         break;
                 }
             }
