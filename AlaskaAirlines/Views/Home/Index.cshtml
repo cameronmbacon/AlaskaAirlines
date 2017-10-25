@@ -1,1 +1,30 @@
-﻿<h2>Welcome to ASP.NET MVC @ViewData["Version"] on @ViewData["Runtime"]!</h2>
+﻿@{
+    ViewData["Title"] = "Index";
+}
+
+@using AlaskaAirlines.Models
+@model List<Airport>
+
+<h2>Search For Flights!</h2>
+
+<form asp-controller="Home" asp-action="Index" method="get">
+    <div>
+        <select name="From" asp-items="Model">
+			From:
+			@foreach (var a in Model)
+			{
+                <option value="@a.Code">@a.Name</option>
+			}
+        </select>
+
+		<select name="To" asp-items="Model">
+            To:
+            @foreach (var a in Model)
+            {
+                <option value="@a.Code">@a.Name</option>
+            }
+        </select>
+
+        <input type="submit" value="Search" />
+    </div>
+</form>
